@@ -8,24 +8,29 @@ O objetivo principal é demonstrar os conceitos de **Programação Orientada a O
 
 ---
 
-## 🏗️ Estrutura do Sistema
+## 🏗️ Estrutura do Sistema (Organização de Pacotes)
 
-O sistema foi modelado com as seguintes classes principais para refletir as entidades e processos de uma loja real:
+O código foi estruturado seguindo o padrão MVC (Model-View-Controller) simplificado, agrupando as classes de acordo com suas responsabilidades:
 
-### 1. Classes de Entidades
+### 1. Pacote `model` (Entidades de Domínio)
+
+Estas classes representam os dados e as regras de negócio fundamentais.
 
 | Classe | Descrição |
 | :--- | :--- |
 | **`Cliente`** | Representa o consumidor. Possui dados cadastrais (`nome`, `cpf`, `email`). |
 | **`Produto`** | Representa os brinquedos em estoque. Gerencia `nome`, `preco_unitario` e a `estoque`. |
+| **`ItemVenda`** | Detalha um único produto dentro de uma transação. Fixa o preço e a quantidade vendida. |
+| **`Venda`** | Agrupa os `ItemVenda`s e registra a transação completa. Mantém o `valor_total` e o `status`. |
 
-### 2. Classes de Transação e Processo
+### 2. Pacote `controller` (Controle e Serviços)
+
+Estas classes gerenciam a lógica de aplicação e orquestram as operações.
 
 | Classe | Descrição | Relacionamentos Chave |
 | :--- | :--- | :--- |
-| **`ItemVenda`** | Detalha um único produto dentro de uma transação. Fixa o preço e a quantidade vendida. | **Composição** (1..N) com `Venda` |
-| **`Venda`** | Agrupa os `ItemVenda`s e registra a transação completa. Mantém o `valor_total` e o `status`. | **Associação** com `Cliente` |
 | **`ServicoPagamento`** | Simula a integração com uma API externa para processar e estornar pagamentos. | **Dependência (`<<use>>`)** com `Venda` |
+| **`SistemaVendas`** | Controlador principal que gerencia o fluxo de cadastro e interação entre as entidades. | **Associação** com as entidades do `model` |
 
 ### 3. Diagrama de Classes - Resumo dos Relacionamentos
 
@@ -65,7 +70,6 @@ Para rodar o sistema, siga os passos abaixo:
 1.  **Pré-requisitos:** Certifique-se de ter o Python 3 instalado em sua máquina.
 2.  **Executar o arquivo principal:**
     ```bash
-    python main.py
+    python Principal.py
     ```
 3.  **Uso:** O sistema irá iniciar no Menu Principal, onde é possível selecionar o perfil de acesso (`1. Cliente`, `2. Vendedor`, `3. Gerente`) para interagir com as funcionalidades modeladas.
-
