@@ -4,8 +4,6 @@
 
 Este projeto é uma implementação básica de um sistema de vendas e gestão de uma Loja de Brinquedos. Ele se baseia em **diagramas UML (Diagrama de Casos de Uso e Diagrama de Classes)** para modelar as interações entre os atores e a estrutura de dados do sistema.
 
-O objetivo principal é demonstrar os conceitos de **Programação Orientada a Objetos (POO)** e de **Modelagem de Software**, incluindo classes, atributos, métodos e diferentes tipos de relacionamentos (associação, composição e dependência), utilizando a linguagem Python.
-
 ---
 
 ## 🏗️ Estrutura do Sistema (Organização de Pacotes)
@@ -73,3 +71,4 @@ Para rodar o sistema, siga os passos abaixo:
     python Principal.py
     ```
 3.  **Uso:** O sistema irá iniciar no Menu Principal, onde é possível selecionar o perfil de acesso (`1. Cliente`, `2. Vendedor`, `3. Gerente`) para interagir com as funcionalidades modeladas.
+
