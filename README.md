@@ -48,6 +48,7 @@ O modelo relacional abaixo define a estrutura de banco de dados (BD) que seria u
 | **PRODUTO** | **id\_produto (PK)**, nome, preco\_unitario, estoque | **(3)** PRODUTO $\rightarrow$ ITEM\_VENDA |
 | **VENDA** | **id\_pedido (PK)**, data\_hora, valor\_total, status, **id\_cliente (\*FK\*)** | **(2)** VENDA $\rightarrow$ ITEM\_VENDA |
 | **ITEM\_VENDA** | **id\_venda (PK, \*FK\*)**, **id\_produto (PK, \*FK\*)**, quantidade, preco | **Chave Composta:** id\_venda, id\_produto |
+| **PAGAMENTO** | **id_pagamento (PK)**, id_transacao_api, status, **id_venda (*FK*)** | **(1:1)** VENDA $\leftrightarrow$ PAGAMENTO |
 
 ---
 
@@ -67,3 +68,4 @@ Para rodar o sistema, siga os passos abaixo:
     python main.py
     ```
 3.  **Uso:** O sistema irá iniciar no Menu Principal, onde é possível selecionar o perfil de acesso (`1. Cliente`, `2. Vendedor`, `3. Gerente`) para interagir com as funcionalidades modeladas.
+
