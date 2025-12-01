@@ -1,85 +1,69 @@
-# 🛍️ Sistema Básico de Loja de Brinquedos
+# 🛍️ Sistema Básico de Loja de Brinquedos 🧱
 
+## 📜 Contexto e Objetivo do Projeto
 
+Este projeto é uma implementação básica de um sistema de vendas e gestão de uma Loja de Brinquedos. Ele se baseia em **diagramas UML (Diagrama de Casos de Uso e Diagrama de Classes)** para modelar as interações entre os atores e a estrutura de dados do sistema.
 
-# Contexto do Projeto
+O objetivo principal é demonstrar os conceitos de **Programação Orientada a Objetos (POO)** e de **Modelagem de Software**, incluindo classes, atributos, métodos e diferentes tipos de relacionamentos (associação, composição e dependência), utilizando a linguagem Python.
 
+---
 
-
-Este projeto é uma implementação básica de um sistema de vendas e gestão de uma Loja de Brinquedos. Ele se baseia em diagramas UML (Diagrama de Casos de Uso e Diagrama de Classes) para modelar as interações entre os atores e a estrutura de dados do sistema.
-
-
-
-O objetivo principal é demonstrar os conceitos de Programação Orientada a Objetos (POO), de Projetos de Software, como classes, atributos, métodos, e diferentes tipos de relacionamentos (associação, composição e dependência), utilizando a linguagem Python.
-
-
-
-
-
-# 🏗️ Estrutura do Sistema
-
-
+## 🏗️ Estrutura do Sistema
 
 O sistema foi modelado com as seguintes classes principais para refletir as entidades e processos de uma loja real:
 
-
-
 ### 1. Classes de Entidades
 
-
-
 | Classe | Descrição |
-
-**`Cliente`** - Representa o consumidor que realiza compras. Possui dados cadastrais (nome, CPF, email). 
-
-**`Produto`** - Representa os brinquedos em estoque. Gerencia o nome, preço unitário e a quantidade em `estoque`. 
-
-
+| :--- | :--- |
+| **`Cliente`** | Representa o consumidor. Possui dados cadastrais (`nome`, `cpf`, `email`). |
+| **`Produto`** | Representa os brinquedos em estoque. Gerencia `nome`, `preco_unitario` e a `estoque`. |
 
 ### 2. Classes de Transação e Processo
 
-
-
 | Classe | Descrição | Relacionamentos Chave |
+| :--- | :--- | :--- |
+| **`ItemVenda`** | Detalha um único produto dentro de uma transação. Fixa o preço e a quantidade vendida. | **Composição** (1..N) com `Venda` |
+| **`Venda`** | Agrupa os `ItemVenda`s e registra a transação completa. Mantém o `valor_total` e o `status`. | **Associação** com `Cliente` |
+| **`ServicoPagamento`** | Simula a integração com uma API externa para processar e estornar pagamentos. | **Dependência (`<<use>>`)** com `Venda` |
 
-**`ItemVenda`** - Detalha um único produto dentro de uma transação. Fixa o preço e a quantidade vendida. // **Composição** (1..N) com `Venda` 
-
-**`Venda`** - Agrupa os `ItemVenda`s e registra a transação completa. Mantém o `valor_total` e o `status` (pendente, pago). // **Associação** com `Cliente` 
-
-**`ServicoPagamento`** - Simula a integração com uma API externa para processar e estornar pagamentos. // **Dependência (`<<use>>`)** com `Venda` 
-
-
----
-
-
-
-## ⚙️ Diagrama de Classes - Resumo dos Relacionamentos
-
-
+### 3. Diagrama de Classes - Resumo dos Relacionamentos
 
 | Relacionamento | Classes | Tipo de UML | Descrição no Código |
-
-
-| Cliente -> Venda | $0..N \leftarrow 1$ | **Associação** | A classe `Venda` referencia um objeto `Cliente`. |
-
-| Venda -> ItemVenda | $1 \rightarrow 1..N$ | **Composição** | A classe `Venda` contém uma lista de objetos `ItemVenda`. |
-
-| ItemVenda -> Produto | $1 \rightarrow 1$ | **Associação** | A classe `ItemVenda` referencia um objeto `Produto` para obter seu preço e nome. |
-
+| :--- | :--- | :--- | :--- |
+| Cliente $\rightarrow$ Venda | $0..N \leftarrow 1$ | **Associação** | A classe `Venda` referencia um objeto `Cliente`. |
+| Venda $\rightarrow$ ItemVenda | $1 \rightarrow 1..N$ | **Composição** | A classe `Venda` contém uma lista de objetos `ItemVenda`. |
+| ItemVenda $\rightarrow$ Produto | $1 \rightarrow 1$ | **Associação** | A classe `ItemVenda` referencia um objeto `Produto` para obter seu preço e nome. |
 | Venda $\ll$ utiliza $\gg$ ServicoPagamento | N/A | **Dependência** | A classe `Venda` utiliza (chama métodos de) `ServicoPagamento` para finalizar a transação. |
-
-
 
 ---
 
+## ⚙️ Modelo de Persistência (Modelo Relacional)
 
+O modelo relacional abaixo define a estrutura de banco de dados (BD) que seria usada para persistir as informações, seguindo a estrutura lógica do Diagrama de Classes.
 
-## 🛠️ Tecnologias
+| Tabela | Colunas (Chave Primária: **PK**, Chave Estrangeira: *FK*) | Relacionamentos (1:N) |
+| :--- | :--- | :--- |
+| **CLIENTE** | **id\_cliente (PK)**, nome, cpf, email | **(1)** CLIENTE $\rightarrow$ VENDA |
+| **PRODUTO** | **id\_produto (PK)**, nome, preco\_unitario, estoque | **(3)** PRODUTO $\rightarrow$ ITEM\_VENDA |
+| **VENDA** | **id\_pedido (PK)**, data\_hora, valor\_total, status, **id\_cliente (\*FK\*)** | **(2)** VENDA $\rightarrow$ ITEM\_VENDA |
+| **ITEM\_VENDA** | **id\_venda (PK, \*FK\*)**, **id\_produto (PK, \*FK\*)**, quantidade, preco | **Chave Composta:** id\_venda, id\_produto |
 
+---
 
+## 🛠️ Tecnologias e Execução
 
-**Linguagem de Programação:** Python
-
+### Tecnologias Utilizadas
+* **Linguagem de Programação:** Python (versão 3.8+)
 * **Ambiente de Desenvolvimento:** VSCode
-
 * **Modelagem:** UML (Diagramas de Casos de Uso e Classes)
+
+### 🚀 Instruções de Execução
+Para rodar o sistema, siga os passos abaixo:
+
+1.  **Pré-requisitos:** Certifique-se de ter o Python 3 instalado em sua máquina.
+2.  **Executar o arquivo principal:**
+    ```bash
+    python main.py
+    ```
+3.  **Uso:** O sistema irá iniciar no Menu Principal, onde é possível selecionar o perfil de acesso (`1. Cliente`, `2. Vendedor`, `3. Gerente`) para interagir com as funcionalidades modeladas.
